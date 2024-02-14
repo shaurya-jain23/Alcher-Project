@@ -1,0 +1,393 @@
+@font-face {
+    font-family: 'fsp-demo-freigeist-con-black-5';
+    src: url(../Fontspring-DEMO-freigeist-conblack.otf);
+  }
+@font-face {
+    font-family: 'Uncut-Sans';
+    src: url(../Uncut-Sans-Regular.otf);
+  }
+
+
+/* HTML: <div class="loader"></div> */
+body{
+    height: 100%;
+    width: 100%;
+    background-color: #181818;
+    position: relative;
+    color:white;
+    box-sizing: border-box;
+    overflow-x: hidden;
+}
+.navbar{
+    background-color: #1E1E1EB2;
+    color: #f4f4f4;
+    display: flex;
+    padding: 0.5rem 2rem;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.9vw;
+}
+.heroSection{
+    background-color: #F4F4F4;
+    background-image:url("../images/BG-min.png");
+    background-size: 100vw 60vw;
+    background-position-x: center;
+    background-position-y: -20px;
+    background-repeat: repeat;
+    overflow: hidden;
+    width: 100vw;
+    height: 65vw;
+    position: relative;
+}
+.heroSection h1{
+    font-family: 'fsp-demo-freigeist-con-black-5';
+    position: absolute;
+    top: 10vh;
+    left: 5vw;
+    color: #181818;
+    text-transform: uppercase;
+    font-size: 6.5vw;
+}
+.heroSection h1 span{
+    font-family: 'Uncut-Sans';
+}
+.heroSection #flags img[alt = 'Buy Passes Here']{
+    position: absolute;
+    left: 14vw;
+    bottom: 8vw;
+    height: 30vw;
+    z-index: 2;
+    animation: float 3s infinite alternate;
+    animation-timing-function: ease-in-out;
+    transform-origin: bottom center;
+}
+.heroSection #flags img[alt = 'See You There']{
+    position: absolute;
+    left: 35vw;
+    bottom: 6vw;
+    height: 25vw;
+    z-index: 1;
+    animation: float2 3s infinite alternate-reverse;
+    animation-timing-function: ease-in-out;
+    transform-origin: bottom center;
+}
+.heroSection #flags img[alt = 'dates']{
+    position: absolute;
+    right: 10vw;
+    bottom: 6vw;
+    height: 25vw;
+    z-index: 1;
+    animation: float 3s infinite alternate;
+    animation-timing-function: linear;
+    transform-origin: bottom center;
+}
+.waves{
+    position: absolute ;
+    bottom: -10px;
+    left: 0;
+    width: 100%;
+}
+
+.passdiv{
+    /* width: 100%; */
+    padding: 0 5vw;
+    overflow-x: hidden;
+}
+
+.passContainer{
+    width: 100%;
+    position: relative;
+}
+
+.hand {
+    right: -12vw;
+    top: -2vw;
+    height: 11vw;
+    position: absolute;
+    overflow: hidden;
+    -webkit-animation: mover 1s infinite  alternate;
+    animation: mover 1s infinite  alternate;
+}
+.DayWisePasses{
+    margin-bottom: 15vh;
+    position: relative;
+}
+.downhand{
+    left: -12vw;
+    bottom: -8vw;
+    height: 11vw;
+    position: absolute;
+    overflow: hidden;
+    -webkit-animation: mover 1s infinite  alternate;
+    animation: mover 1s infinite  alternate;
+}
+#star1{
+    position: absolute;
+    top: 2vw;
+    right: -2vw;
+    height: 7vw;
+    overflow: hidden;
+    animation: blink 2s infinite alternate;
+    animation-timing-function: ease-in-out;
+}
+#star2{
+    position: absolute;
+    top: 8vw;
+    left: -3vw;
+    height: 4vw;
+    overflow: hidden;
+    animation: blink 2s infinite alternate-reverse;
+    animation-timing-function: ease-in-out;
+}
+#star3{
+    position: absolute;
+    top: 5.1vw;
+    right: -2vw;
+    height: 3.5vw;
+    overflow: hidden;
+    animation: blink 2s infinite alternate;
+    animation-timing-function: ease-in-out;
+}
+#star4{
+    position: absolute;
+    bottom: 1vw;
+    right: 40vw;
+    height: 2.5vw;
+    overflow: hidden;
+    animation: blink 2s infinite alternate-reverse;
+    animation-timing-function: ease-in-out;
+}
+#star5{
+    position: absolute;
+    bottom: 1vw;
+    left: -1vw;
+    height: 3.5vw;
+    overflow: hidden;
+    animation: blink 2s infinite alternate;
+    animation-timing-function: ease-in-out;
+}
+#passesHead{
+    font-size: 4vw;
+    margin: 0 0 5vh 0;
+    font-family: 'fsp-demo-freigeist-con-black-5';
+}
+.allSeason{
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: column;
+}
+.allSeason b{
+    font-size: 3vw;
+    font-family: 'fsp-demo-freigeist-con-black-5';
+}
+.allSeason h3{
+    font-weight: 500;
+    font-size: 1.4vw;
+    font-family: 'Uncut-Sans';
+    margin: 0 0 2vw 0;
+}
+.topdiv{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.topdiv h1{
+    font-size: 4vw;
+    margin-bottom: 0.5vw;
+}
+.passdiv h1{
+    font-size: 3vw;
+    font-family: 'fsp-demo-freigeist-con-black-5';
+    margin: 0;
+}
+.seasonpass{
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+}
+.headtxt{
+    font-family: 'fsp-demo-freigeist-con-black-5';
+    font-size: 3.5vw;
+    margin: 2.5vw 9vw 1.5vw 2.5vw;
+}
+.headtxt2{
+    font-size: 3.5vw;
+    font-family: 'fsp-demo-freigeist-con-black-5';
+    margin: 2.5vw 9vw 15vw 2.5vw;
+}
+#seasonDate, #seasonPrice{
+    font-family: 'Uncut-Sans';
+    margin-bottom: 10px;
+    font-size: 1.4vw;
+    height: 12%;
+    width: 42%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #DB5356;
+    --m: 
+    conic-gradient(from -135deg at right, #0000,#000 1deg 89deg,#0000 90deg) right/100% 0.7vw repeat-y;
+    -webkit-mask: var(--m);
+            mask: var(--m);
+}
+#seasonPrice{
+    margin-top: 0;
+    width: 15%;
+    height: 15%;
+    font-size: 1.9vw;
+    padding: 0 1.5vw;
+    justify-content: flex-start;
+    --m: 
+    conic-gradient(from -135deg at right, #0000,#000 1deg 89deg,#0000 90deg) right/100% 0.8vw repeat-y;
+    -webkit-mask: var(--m);
+            mask: var(--m);
+}
+.earlybird{
+    width: 44vw;
+    height: 22vw;
+    border-radius: 3vw;
+    overflow: hidden;
+    position: relative;
+    color: white;
+}
+.dayPassContainer{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.day1
+{
+    width: 28vw;
+    height: 35vw;
+    border-radius: 25px;
+    overflow: hidden;
+    color:white;
+    position: relative;   
+}
+#dayDate, #dayPrice{
+    font-family: 'Uncut-Sans';
+    font-size: 1.3vw;
+    margin-bottom: 10px;
+    height: 8%;
+    width: 45%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #DB5356;
+    --m: 
+    conic-gradient(from -135deg at right, #0000,#000 1deg 89deg,#0000 90deg) right/100% 0.7vw repeat-y;
+    -webkit-mask: var(--m);
+            mask: var(--m);
+}
+#dayPrice{
+    margin-top: 0;
+    width: 17%;
+    height: 10%;
+    font-size: 1.7vw;
+    padding: 0 1.5vw 0 1vw;
+    justify-content: flex-start;
+    --m: 
+    conic-gradient(from -135deg at right, #0000,#000 1deg 89deg,#0000 90deg) right/100% 0.8vw repeat-y;
+    -webkit-mask: var(--m);
+            mask: var(--m);
+}
+.btndiv{
+    display: flex;
+    justify-content: flex-end;
+}
+.btn{
+    border: none;
+    outline: none;
+    background: url('../images/texture.png');
+    background-color: #F6D317;
+    background-size: auto;
+    background-blend-mode: color-burn ;
+    margin-top: 1vw;
+    border-radius: 8px;
+    padding: 3px 20px;
+    font-family: 'fsp-demo-freigeist-con-black-5';;
+}
+.btn a{
+    font-size: 1.3vw;
+    text-decoration: none;
+    color:black;
+}
+
+@-webkit-keyframes mover {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(-15px); }
+}
+@keyframes mover {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(-15px); }
+}
+@keyframes float {
+    0% { transform: rotate(-10deg); }
+    100%{transform: rotate(20deg); }
+}
+@keyframes float2 {
+    0% { transform: rotate(-20deg); }
+    100%{transform: rotate(10deg); }
+}
+@keyframes blink {
+    0% {transform: scale(1); }
+    100% {transform: scale(1.2); }
+}
+@media(max-width:600px){
+    #passesHead{
+        font-size: 7vw;
+    }
+    .allSeason b{
+        font-size: 6vw;
+    }
+    .allSeason h3{
+        font-size: 3vw;
+    }
+    .seasonpass{
+        flex-direction: column;
+    }
+    .earlybird{
+        width:80vw;
+        height:40vw;
+    }
+    .headtxt{
+        font-size: 5vw;
+        margin-bottom:8vw;
+    }
+    #seasonDate{
+      font-size: 3vw;
+      width:60%;
+    }
+    #seasonPrice{
+        font-size: 3vw;
+    }
+    .btndiv a{
+        font-size: 3vw;
+    }
+    .dayPassContainer{
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap:5vw;
+    }
+    .day1{
+        height:70vw;
+        width:60vw;
+    }
+    .headtxt2{
+        font-size: 8vw;
+        margin-bottom: 30vw;
+    }
+    #dayDate{
+        font-size: 4vw;
+        height:15%;
+        width:60%;
+    }
+    #dayPrice{
+        font-size: 4vw;
+        height:10%;
+        width:45%;
+    }
+}

@@ -1,0 +1,138 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% comment %} <link rel="stylesheet" href="{% static 'register/register.css' %}"> {% endcomment %}
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+    {% block title %}
+    
+    {% endblock title %}
+</head>
+<body>
+    <!-- NavBar  -->
+    <div class="navContainer">
+        <div class="navbar">
+            <div class="left">
+            <a href="{% url 'home' %}" style="cursor: pointer; text-decoration: none; display: flex; align-items: center; color: white;">
+                <img id="alcherlogo1" src="{% static 'images/alcherlogo1.svg' %}" alt="alcherlogo">
+                <h1>ALCHERINGA</h1>
+            </a>
+            </div>
+        </div>
+    </div>
+    <!-- NavBar Ends  -->
+
+    <div id="preLoader">
+        <img src="{% static 'images/loader.png'  %}" alt="loader">
+        <img src="{% static 'images/alcher.png'  %}" alt="logo">
+        <div class="cont">
+          <h1>LOADING <div class="dots"></div></h1>
+          <h2>Welcome to Alcheringa!! We are loading up. <br> please wait...</h2>
+        </div>
+    </div>    
+
+    {% block page %}
+    {% endblock page %}
+
+    <!-- Footer  -->
+    <div class="big">
+        <div class="footer">
+            <div class="welcometxt">
+                Team Alcheringa Welcomes you to the 28th edition of
+                <img class="star" src="{% static 'images/Star.svg' %}" alt="">
+            </div>
+            <div class="ribbon-case">
+                <div class="footer-iit">IIT GUWAHATI'S</div>
+                <img class="star-2" src="{% static 'images/Star.svg' %}" alt="">
+                <div class="footer-alcher">ALCHERINGA</div>
+                <img class="star-3" src="{% static 'images/Star.svg' %}" alt="">
+            </div>
+            <div class="contact">
+                <div class="left-detail">
+                    <div class="contact-info">
+                        <span class="namee">Siddant Singh</span>
+                        <span class="phone">+91 9310859978</span>
+                        <span class="emaile">siddant.s@alcheringa.in</span>
+                    </div>
+                    <div class="contact-info">
+                        <span class="namee">Siddant Singh</span>
+                        <span class="phone">+91 9310859978</span>
+                        <span class="emaile">siddant.s@alcheringa.in</span>
+                    </div>
+                </div>
+                <div class="following">
+                    <span class="follow-us" >Follow us on</span>
+                    <div id="footer-icons">
+                        <a class="icon" href="/" target="_blank">
+                            <i class="fa-brands fa-instagram insta"  style="color: #E8EDD9;"></i>
+                        </a>
+                        <a class="icon" href="" target="_blank">
+                            <img src="{% static 'images/facebook.svg' %}" class="facebook"  alt='' />
+                        </a>
+                        <a class="icon" href="https://twitter.com/alcheringaiitg" target="_blank"><i class="fa-brands fa-x-twitter X" style="color: #E8EDD9;"></i></i></a>
+                        <a class="icon"  href="https://www.youtube.com/c/AlcheringaIITG" target="_blank">
+                            <img src="{% static 'images/youtube.svg' %}" class="youtube" alt='' />
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="creator-info">
+                <div style="display: inline;" class="credit">Designed and Developed by <p
+                        style="display: inline;border-bottom:1px solid white;">Alcher Creatives</p> & <p
+                        style="display: inline;;border-bottom:1px solid white"> Alcher Web Operations</p>
+                </div>
+                <div class="business-contact">
+                    <p style="margin-bottom:0.5vh;">For Business Enquiries</p>
+                    <p class="pub" style="margin-top:0.5vh;margin-bottom:0vh;">publicrelations24@alcheringa.in</p>
+                </div>
+            </div>
+        </div>
+        </div>
+    </div>
+    {% comment %} <div class="mobile-footer">
+        <div class="ribbon-case">
+            <div class="footer-iit">IIT GUWAHATI'S</div>
+            <div class="footer-alcher">ALCHERINGA</div>
+        </div>
+
+        <div class="contact-footer">
+            <div class="people-contact">
+                <div style="margin-bottom:4vh" class="contact-info">
+                    <span class="name">Siddant Singh</span>
+                    <span class="phone">+91 9310859978</span>
+                    <span class="emaile">siddant.s@alcheringa.in</span>
+                </div>
+                <div class="contact-info">
+                    <span class="name">Siddant Singh</span>
+                    <span class="phone">+91 9310859978</span>
+                    <span class="emaile">siddant.s@alcheringa.in</span>
+                </div>
+            </div>
+            <div class="following-footer">
+                <p style="margin-bottom:0px;margin-top:0px;font-size:2.2vw">Follow us</p>
+                <p style="margin-top:0px;font-size:2.2vw">on</p>
+                <a href="/" target="_blank"><i class="bi bi-instagram" style=" color:white;font-size:3vw;"></i></a>
+                <a href="" target="_blank"><i class="bi bi-facebook" style=" color:white;font-size:3vw;"></i></a>
+                <a href="https://twitter.com/alcheringaiitg" target="_blank"><i class="bi bi-twitter"
+                        style=" color:white;font-size:3vw;"></i></a>
+                <a href="https://www.youtube.com/c/AlcheringaIITG" target="_blank"><i class="bi bi-youtube"
+                        style=" color:white;font-size:3vw;"></i></a>
+            </div>
+        </div>
+        <div style="display: inline;font-size:2.2vw;width:100%;margin-left:10%;margin-bottom:2vh">Designed and
+            Developed by <p style="display: inline;border-bottom:1px solid white;">Alcher Creatives</p> & <p
+                style="display: inline;;border-bottom:1px solid white"> Alcher Web Operations</p>
+        </div>
+
+    </div> {% endcomment %}
+    <!-- Footer Ends  -->
+    
+</body>
+
+{% block script %}
+{% endblock script %}
+
+</html>

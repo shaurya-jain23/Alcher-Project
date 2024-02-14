@@ -1,0 +1,115 @@
+{% extends "main/base.html" %}
+{% load static %}
+
+{% block title %}
+  <title>Passportal</title>
+  <link rel="stylesheet" href="{% static 'css/home.css' %}">
+{% endblock title %}
+
+{% block page %}
+  <div class="body">
+    <div class="heroSection">
+      <h1>Grab your <br> passes here<span>!!</span></h1>
+      <div id="flags">
+        <a class="scrollbtn" href="#Passes" style="pointer: cursor"><img src="{% static 'images/buyPasses.png' %}" alt="Buy Passes Here"></a>
+        <img src="{% static 'images/seeYou.png' %}" alt="See You There">
+        <img src="{% static 'images/dates.png' %}" alt="dates">
+      </div>
+      <svg class="waves" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="#00000" fill-opacity="1" d="M0,32L48,48C96,64,192,96,288,122.7C384,149,480,171,576,149.3C672,128,768,64,864,64C960,64,1056,128,1152,138.7C1248,149,1344,107,1392,85.3L1440,64L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path></svg>
+    </div>
+    <div class="passdiv">
+      <h1 id="passesHead">ALCHERINGA PASSES</h1>
+      <div class="passContainer" id="Passes">
+        <div class="allSeason">
+            <b>ALL SEASON PASSES</b>
+            <h3 class="alchertxt">These passes includes everyday passes within it.</h3>
+            <img class="hand" src="{% static 'images/UpHand.png' %}">
+        </div>
+
+        <div class="seasonpass">
+          {% for seasonpass_key, seasonpass_value in seasonPasses.items %}
+          <div>
+            <div class="earlybird" style="background: url({{seasonpass_value.Image}}) no-repeat center; background-size: cover;">
+              <h2 class="headtxt">{{ seasonpass_key }}</h2>
+              <p id="seasonDate" class="alchertxt">{{seasonpass_value.Date}}</p>
+              <p id="seasonPrice" class="alchertxt">{{seasonpass_value.Price}}</p>
+            </div>
+            <div class="btndiv">
+              <button class="btn"><a href="{% url 'otp' %}" style ="text-decoration: 'none'; color: 'black'; ">REGISTER &rarr;</a></button>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+        <img id="star2" src="{% static 'images/Star.png' %}" alt="star">
+        <img id="star3" src="{% static 'images/Star.png' %}" alt="star">
+        <img id="star4" src="{% static 'images/Star.png' %}" alt="star">
+      </div>
+
+      <div class="DayWisePasses">
+        <div class="allSeason">
+          <b>DAY WISE PASSES</b>
+          <h3 class="alchertxt">These passes includes single-day pass as mentioned on it.</h3>
+        </div>
+        <div class="dayPassContainer">
+          {% for daypass_key, daypass_value in dayWisePasses.items %}
+            <div >
+              <div class="day1" style="background: url({{daypass_value.Image}}) no-repeat center; background-size: cover;">    
+                <h2 class="headtxt2">{{ daypass_key }}</h2>
+                <p id="dayDate" class="alchertxt">{{ daypass_value.Date }}</p>
+                <p id="dayPrice" class="alchertxt">{{ daypass_value.Price }}</p>
+              </div>
+              <div class="btndiv">
+                <button class="btn"><a href="{% url 'otp' %}" style="text-decoration: none; color:black;">REGISTER &rarr;</a></button>
+              </div>
+            </div>
+          {% endfor %}
+          <img id="star1" src="{% static 'images/Star.png' %}" alt="star">
+          <img id="star5" src="{% static 'images/Star.png' %}" alt="star">
+          <img class="downhand" src="{% static 'images/DownHand.png' %}">
+        </div>
+
+    </div>
+
+  </div>
+  </div>
+
+
+{% endblock page %}
+
+{% block script %}
+
+<script>
+
+  async function loadData() {
+          try {
+              const response = await fetch('{% url "get_data" %}');  // Replace with the actual URL of your Django API endpoint
+              // const data = await response.json();
+              // console.log(data);
+              document.body.style.overflow = 'hidden auto';
+              let loader = document.querySelector('#preLoader');
+              loader.style.display = 'none';
+            } catch (error) {
+            console.error('Error fetching data:', error);
+        }
+    }
+
+    const scrollbtn = document.querySelector(".scrollbtn");
+    document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+      anchor.addEventListener("click", function (e) {
+        e.preventDefault();
+        document.querySelector(this.getAttribute("href")).scrollIntoView({
+          behavior: "smooth",
+          block: "start",
+          inline: "nearest",
+        });
+      });
+    });
+
+  window.addEventListener('DOMContentLoaded', ()=>{
+    loadData();
+    document.body.style.overflow = 'hidden';
+  })
+
+</script>
+
+{% endblock script %}

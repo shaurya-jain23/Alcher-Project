@@ -1,0 +1,565 @@
+@font-face {
+    font-family: 'fsp-demo-freigeist-con-black-5';
+    src: url(../Fontspring-DEMO-freigeist-conblack.otf);
+}
+
+@font-face {
+    font-family: 'Uncut-Sans';
+    font-weight: 400;
+    src: url(../Uncut-Sans-Regular.otf);
+}
+
+@font-face {
+    font-family: 'Uncut-Sans';
+    font-weight: 700;
+    src: url(../Uncut-Sans-Bold.otf);
+}
+
+@font-face {
+    font-family: 'Uncut-Sans';
+    font-weight: 500;
+    /* Adjust to the appropriate weight */
+    src: url(../Uncut-Sans-Medium.otf);
+}
+*{
+    margin: 0;
+    padding: 0;
+}
+body{
+    background: url('../images/texture.png');
+    background-blend-mode: color-burn ;
+    z-index: 200;
+    box-sizing: border-box;
+}
+.dots {
+    display: inline-block;
+    width: 60px;
+    aspect-ratio: 4;
+    background: radial-gradient(circle closest-side,#fff 90%,#0000) 0/calc(100%/3) 100% space;
+    clip-path: inset(0 100% 0 0);
+    animation: l1 1s steps(4) infinite;
+  }
+  @keyframes l1 {to{clip-path: inset(0 -34% 0 0)}}
+
+#preLoader{
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    background: #181818;
+    z-index: 100 ;
+    display: flex;
+    align-items: center;
+}
+#preLoader img[alt='loader'] {
+    height: 13vw;
+    position: relative;
+    left: 28.5%;
+    animation: loader 5s infinite linear;
+    transform: translate(-50%, 0%) rotate(45deg);
+}
+
+#preLoader img[alt= 'logo']{
+    height: 3vw;
+    z-index: 9;
+    position: absolute;
+    top: 50%;
+    left: 35%;
+    transform: translate(-50%, -50%);
+}
+.cont{
+    position: absolute;
+    top: 50%;
+    left: 60%;
+    transform: translate(-50%, -50%);
+}
+#preLoader h2{
+    font-family: 'Uncut-Sans';
+    color: #ffff;
+    font-size: 1.5vw;
+    font-weight: 500;
+}
+#preLoader h1{
+    font-family: 'fsp-demo-freigeist-con-black-5';
+    color: #ffff;
+    font-size: 5vw;
+    margin: 0;
+}
+@keyframes loader {
+    0% { transform: rotate(0); }
+    100%{transform: rotate(1turn); }
+}
+h1 {
+    margin: 0 1vw;
+    font-size: x-large;
+    font-family: 'fsp-demo-freigeist-con-black-5';
+}
+.navContainer {
+    width: 100%;
+    z-index: 9;
+}
+#alcherlogo1 {
+    height: 2.3rem;
+    width: max-content;
+
+}
+.navbar {
+
+    background-color: #E1E1E11A;
+    color: #f4f4f4;
+    display: flex;
+    padding: 0.5rem 2rem;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.9vw;
+}
+.left {
+    display: flex;
+    align-items: center;
+}
+.icon {
+
+    text-decoration: none;
+    color: #E8EDD9;
+}
+.pub{
+    font-weight: 500;
+}
+#footer-icons {
+    display: flex;
+    align-items: flex-end;
+    margin-top: 0.3rem;
+}
+.left-detail {
+    display: flex;
+}
+.icon {
+    margin: 0 0 0 10px;
+    font-size: 0;
+}
+
+.passoption {
+    background-color: #444A7F;
+    color: #FFFFFF;
+
+    font-family: 'Uncut-Sans';
+
+}
+
+.insta {
+    font-size: 1.5rem;
+    transform: translatey(1px);
+}
+
+.icon img,
+.X {
+    font-size: 1.4rem;
+}
+
+.facebook {
+    width: 1.4rem;
+}
+
+.youtube {
+    width: 1.6rem;
+}
+
+.arrow {
+    border: solid black;
+    border-width: 0 3px 3px 0;
+    display: inline-block;
+    padding: 3px;
+}
+
+.right {
+    transform: rotate(-45deg);
+    -webkit-transform: rotate(-45deg);
+}
+
+.big {
+    background-image: url("../images/footer-background.svg"), url('../images/texture.png') !important;
+    background-blend-mode: color-burn;
+    background-size: cover;
+    background-color: #181818;
+    background-repeat: no-repeat;
+    background-position-y: 7vw;
+}
+
+.star {
+    position: absolute;
+    width: 4vw;
+    transform: translate(1vw, -3vw);
+}
+
+.star-2 {
+    position: absolute;
+    width: 2vw;
+    left: 11%;
+    bottom: 13vw;
+}
+
+.star-3 {
+    position: absolute;
+    width: 5vw;
+    transform: translate(78vw, 1vw);
+}
+
+.footer {
+    margin-top: 3vw;
+    font-family: 'Uncut-Sans';
+    background-image: url(../images/ribbon-b.svg), url(../images/ribbon.svg) !important;
+    height: 50vw;
+    background-size: cover;
+    background-repeat: no-repeat;
+    display: flex;
+    background-size: 36vw, 36vw;
+    background-position: left 1vw, right 1vw;
+    flex-direction: column;
+    align-items: center;
+    color: #F1F1F1;
+    width: 100%;
+    height: auto;
+}
+
+.footer-iit {
+    /* margin-top: 7%; */
+    font-size: 2vw;
+    text-align: center;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+    -moz-appearance: textfield;
+}
+
+.footer-alcher {
+    font-family: 'fsp-demo-freigeist-con-black-5';
+    font-size: 8vw;
+    font-weight: 1000;
+    width: 100%;
+    text-align: center;
+    margin-bottom: 1.5%;
+
+}
+
+.ribbon-case {
+    width: 100%;
+    padding: 5vw 0 7vw 0;
+    position: relative;
+    background-repeat: no-repeat, no-repeat, no-repeat, no-repeat;
+}
+
+.following {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+.contact {
+    color: #E8EDD9;
+    width: 90%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin: auto;
+    margin-bottom: 1.5%;
+}
+
+.contact-info {
+    display: flex;
+    flex-direction: column;
+    margin-right: 2vw;
+}
+
+.namee {
+    font-weight: 500;
+    margin-bottom: 10%;
+    font-size: 1.621vw;
+}
+.follow-us{
+    font-size: 1.6rvw;
+}
+
+.phone {
+    font-size: 1.12vw;
+    font-weight: 100;
+}
+
+.emaile {
+    font-size: 1.12vw;
+    font-weight: 100;
+}
+
+.creator-info {
+    display: flex;
+    /* flex-direction: row; */
+    color: #E8EDD9;
+    width: auto;
+    font-size: 1.12vw;
+    padding: 0 5vw;
+    width: 90%;
+    margin-bottom: 2%;
+    justify-content: space-between;
+    align-items: flex-end;
+}
+
+.business-contact {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+.welcometxt {
+    font-family: 'Uncut-Sans';
+    color: #f4f4f4;
+    text-align: center;
+    margin-top: 4vw;
+    font-weight: 500;
+    height: 10vh;
+    font-size: 1.6vw;
+    letter-spacing: 0px;
+    background-repeat: no-repeat;
+    background-size: 6vh;
+    background-position: 77% 0%;
+    position: relative;
+}
+@media(max-width:950px) {
+    .welcometxt {
+        font-size: 1.8vw;
+    }
+
+    .star-3 {
+        transform: translate(77vw, -2vw);
+    }
+
+    .star-2 {
+        width: 4vw;
+    }
+    .footer-alcher {
+        font-size: 8vw;
+    }
+
+    #buypasses {
+        font-size: 2.2vw;
+    }
+
+    .phone {
+        font-size: 1.5vw;
+        margin-top: 1vw;
+    }
+
+    .emaile {
+        font-size: 1.5vw;
+    }
+
+    .namee {
+        font-size: 1.9vw;
+    }
+
+    .creator-info {
+        font-size: 1.3vw;
+    }
+}
+
+@media (max-width:650px) {
+    h1 {
+        font-size: 1.4rem;
+    }
+    #alcherlogo1 {
+        height: 2rem;
+    }
+    .follow-us {
+        font-size: 2.3vw;
+    }
+
+    .star-3 {
+        transform: translate(77vw, -2vw);
+    }
+
+    .star-2 {
+        width: 4vw;
+    }
+    .footer-iit {
+        margin-top: 2%;
+        font-weight: 600;
+        font-size: 2.5vw;
+
+    }
+
+    .icon {
+        margin: 3px 0;
+    }
+
+    .icon img {
+        width: 3.3vw;
+    }
+
+    .insta {
+        font-size: 3.9vw;
+    }
+
+    .X {
+        font-size: 3.3vw;
+    }
+
+    .left-detail {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .contact-info {
+        margin-bottom: 2vw;
+    }
+
+    .footer-alcher {
+        height: 10vw;
+        font-size: 7vw;
+        padding-bottom: 0vw;
+    }
+
+    .creator-info {
+        padding-bottom: 1vw;
+        justify-content: center;
+        font-size: 2.2vw;
+    }
+
+    .business-contact {
+        display: none;
+    }
+
+    #footer-icons {
+        display: flex;
+        flex-direction: column;
+
+    }
+
+    .namee {
+        font-size: 2.6vw;
+        margin-bottom: 1.5vh;
+    }
+
+    .phone {
+        font-size: 2vw;
+    }
+
+    .emaile {
+        font-size: 2vw;
+    }
+    .price p {
+        font-size: 4vw;
+    }
+    .passes {
+        display: none;
+    }
+
+    .detailbox {
+        margin-left: 3vw;
+    }
+
+    .arrow {
+        width: 50vw;
+        margin-left: 3vw;
+    }
+}
+
+@media (max-width:450px) {
+    .phone {
+        font-size: 0.6rem;
+    }
+
+    .namee {
+        font-size: 0.8rem;
+        font-weight: 500;
+    }
+
+    .credit {
+        display: inline;
+        font-size: 0.6rem;
+    }
+
+    .welcometxt {
+        font-size: 2.6vw;
+
+    }
+
+    .iti__arrow {
+        margin-left: 3px;
+    }
+
+    .detailbox {
+        margin-bottom: 0vw;
+    }
+
+    .number {
+        width: 75vw !important;
+    }
+
+    .star-2 {
+        left: 24%;
+        top: 29%;
+    }
+    .star-3 {
+        transform: translate(77vw, 1rem);
+    }
+    .footer-alcher {
+        font-size: 2.7rem;
+    }
+
+    .ribbon-case {
+        padding: 2.8rem 0 3.5rem 0;
+    }
+
+    .icon {
+        font-size: 0;
+        margin: 7px 0;
+    }
+
+    .emaile {
+        font-size: 0.6rem;
+    }
+
+    .follow-us {
+        font-size: 0.8rem;
+    }
+
+    .creator-info {
+        padding-top: 1rem;
+    }
+
+    .insta {
+        font-size: 1.2rem;
+    }
+
+    .X,
+    .icon img {
+        font-size: 1rem;
+    }
+
+    .footer {
+        background-size: 12rem, 12rem;
+    }
+
+    .footer-iit {
+        font-size: 0.9rem;
+    }
+}
+
+@media (max-width:360px) {
+    .welcometxt {
+        font-size: 2.6vw;
+    }
+
+    .star-3 {
+        transform: translate(77vw, 1rem);
+    }
+
+    .star-2 {
+        left: 24%;
+        top: 29%;
+    }
+}

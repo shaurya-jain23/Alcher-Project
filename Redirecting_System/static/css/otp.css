@@ -1,0 +1,391 @@
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    color: #F4F4F4;
+}
+@font-face {
+    font-family: 'fsp-demo-freigeist-con-black-5';
+    src: url(../Fontspring-DEMO-freigeist-conblack.otf);
+  }
+@font-face {
+    font-family: 'Uncut-Sans';
+    src: url(../Uncut-Sans-Regular.otf);
+  }
+body{
+    height: 100%;
+    width: 100%;
+    background-color: #181818;
+}
+
+#passPortalContent{
+    padding: 5vw;
+}
+
+h3{
+    margin: 0;
+}
+
+.heading{
+    margin: 5vh 0 5vh 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.heading h1{
+    font-family: 'fsp-demo-freigeist-con-black-5', sans-serif;
+    font-size: 5.5vw;
+}
+.heading h3{
+    font-family: 'Uncut-Sans';
+    margin: 0;
+    font-size: 1.5vw;
+    text-align: center;
+}
+
+#pass h2{
+    font-family: 'fsp-demo-freigeist-con-black-5', sans-serif;
+    font-size: 3vw;
+    
+}
+#pass h4{
+    font-family: 'Uncut-Sans';
+    font-size: 1.4vw;
+    margin-bottom: 3vh;
+}
+
+#emailInput{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+.einput{
+    position: relative;
+}
+.einput img{
+    display: none;
+    position: absolute;
+    top: 5px;
+    right: 0;
+    height: 20px;
+}
+#bc{
+    display: flex;
+    justify-content: flex-start;
+    gap: 30px;
+    align-items: center;
+    min-width: 50vw;
+}
+.timer{
+    margin-bottom: 15px;
+    display: none;
+}
+.timer span{
+    font-family: 'Uncut-Sans';
+    font-size: 2.5vh;
+}
+.timer button{ 
+    background-color: transparent;
+    outline: none;
+    border: none;
+    text-decoration: underline;
+    cursor: pointer; 
+    font-size: 2.5vh;
+}
+.timer button:disabled{
+    cursor:auto;
+    color: #f4f4f488;
+}
+.time{
+    color: #39A279;
+}
+#emailInput input{
+    outline: none;
+    border: none;
+    width: 400px;
+    font-size: 20px;
+    padding-bottom: 6px;
+    background: transparent;
+    border-bottom: 2px solid #F4F4F4;
+    margin-bottom: 3vh;
+}
+
+.button{
+    outline: none;
+    border: none;
+    font-family: 'fsp-demo-freigeist-con-black-5', sans-serif;
+    padding: 3px 20px;
+    font-size: 1.6vw;
+    background-color: #F6D317;
+    border-radius: 3px;
+    color: #181818;
+    margin-bottom: 4vh;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+}
+
+.button:disabled{
+    cursor: auto;
+}
+
+#otpInput h2{
+    font-family: 'Uncut-Sans';
+    font-size: 2vw;
+    margin-bottom: 1vh;
+}
+
+#otpVerify{
+    width: 300px;
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 2.5vh;
+    margin-bottom: 3vh;
+    justify-content: space-between;
+}
+
+.dash{
+    outline: none;
+    border: none;
+    width: 40px;
+    font-size: 20px;
+    padding-bottom: 8px;
+    background: transparent;
+    border-bottom: 2px solid #F4F4F4;
+    text-align: center;
+}
+
+.dash::-webkit-outer-spin-button, 
+.dash::-webkit-inner-spin-button{
+    -webkit-appearance: none;
+}
+
+.dash:valid{
+    border-color: #2DA38F;
+}
+
+#alt_otpSend{
+    color: #be1919;
+    font-family: 'Uncut-Sans';
+    font-size: 2vh;
+}
+#alt_wrongOtp{
+    display: flex;
+    align-items: center;
+    color: #d90404;
+    font-family: 'Uncut-Sans';
+    font-weight: bold;
+    font-size: 2vh;
+}
+
+.popUp {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    padding: 2vh;
+    padding-top: 2vh;
+    transform: translate(-50%, -50%) scale(1);
+    transition: all 300ms ease-in-out;
+    background-color: #ffffff;
+    border-radius: 7px;
+    z-index: 10;
+    width:  800px;
+    max-width: 60%;
+    scale: 0;
+  }
+  .popUp.active{
+    scale: 1;
+  }
+  
+  .popUpHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .popUp hr {
+    width: 400px;
+    max-width: 80%;
+    border: 0.5px solid #0a2628;
+    margin-bottom: 10px;
+  }
+  .popUpHeader .popUptitle {
+    font-family: 'Uncut-Sans';
+    font-weight: 800;
+    font-size: 1.9em;
+    color: #d90404;
+  }
+  .popUpHeader .closeBtn {
+    cursor: pointer;
+    border: none;
+    outline: none;
+    background: none;
+    font-weight: 600;
+    font-size: 1.5em;
+    color: #0a2628;
+    position: relative;
+    transition: all ease 0.4s;
+  }
+  .circle{
+    display: none;
+    transition: all ease 0.4s;
+  }
+  .closeBtn:hover .circle{
+    position: absolute;
+    display: block;
+    padding-bottom: 10px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #e62b1e;
+    height: 30px;
+    width: 30px;
+    color: #fff;
+    border-radius: 50%;
+    transition: 1s;
+  }
+  .popUpBody p{
+    color: #181818;
+    font-family: 'Uncut-Sans';
+  }
+  .popUpBodyimg{
+    height: 250px;
+    width: 250px;
+  }
+  .description p{
+    font-weight: 400;
+    font-size: 1.1em;
+    line-height: 1.2;
+  }
+  #overlay {
+    position: fixed;
+    opacity: 0;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    pointer-events: none;
+    background-color: rgba(0, 0, 0, 0.731);
+  }
+  #overlay.active{
+    opacity: 1;
+  }
+
+@media(max-width: 1000px){
+
+   #id{
+    gap: 40px;
+   }
+   #resend{
+    font-size: 15px;
+   }
+   .timer span{
+    font-size: 15px;
+   }
+    #emailInput input{
+        width: 350px;
+        font-size: 15px;
+        padding-bottom: 4px;
+    }
+    #otpVerify{
+        width: 250px;
+    }
+    .dash{
+        width: 35px;
+        font-size: 15px;
+        padding-bottom: 6px;
+    }
+}
+
+@media(max-width: 800px){
+    #bc{
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+    .timer{
+        margin-bottom: 8px;
+    }
+    #emailInput input{
+        width: 350px;
+        font-size: 20px;
+        padding-bottom: 6px;
+    }
+    .dash{
+        width: 35px;
+        font-size: 20px;
+        padding-bottom: 9px;
+    }
+    .heading h1{
+        font-size: 3em;
+    }
+    .heading h3{
+        font-size: 1em;
+    }
+    
+    #pass h2{
+        font-size: 1.8em;
+    }
+    #pass h4{
+        font-size: 1em;
+    }
+    #otpInput h2{
+        font-family: 'Uncut-Sans';
+        font-size: 1em;
+        margin-bottom: 1vh;
+    }
+    .button{
+        font-size: 1em;
+        
+    }
+}
+@media(max-width: 650px){
+    #emailInput input{
+        width: 350px;
+        font-size: 20px;
+        padding-bottom: 6px;
+        margin-bottom: 5px;
+    }
+    .timer{
+        margin-bottom: 15px;
+    }
+}
+
+@media(max-width:500px){
+    #emailInput input{
+        width: 85vw;
+        font-size: 15px;
+        padding-bottom: 6px;
+    }
+    #otpVerify{
+        width: 250px;
+    }
+    .dash{
+        width: 30px;
+        font-size: 15px;
+        padding-bottom: 9px;
+    }
+    .heading h1{
+        font-size: 2.5em;
+    }
+    .heading h3{
+        font-size: 0.7em;
+    }
+    
+    #pass h2{
+        font-size: 1.4em;
+    }
+    #pass h4{
+        font-size: 0.7em;
+    }
+    #otpInput h2{
+        font-family: 'Uncut-Sans';
+        font-size: 1em;
+        margin-bottom: 1vh;
+    }
+    .button{
+        font-size: 1em;
+        
+    }
+}
