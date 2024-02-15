@@ -381,20 +381,19 @@ def generate_jpg_for_transaction(transaction_data):
         
         # Add user_id to the image
         draw = ImageDraw.Draw(img)
-        # font = ImageFont.truetype('arial.ttf', 27)  # Choose your font and size
-        draw.text((1320, 700), user['user_id'], fill="black")  # Choose position (x, y) and color
+        font = ImageFont.truetype('Uncut-Sans-Regular.otf', 27)  # Choose your font and size
+        draw.text((1320, 700), user['user_id'], fill="black",font=font)  # Choose position (x, y) and color
         print("hii")    
 
         # Add vertical user_id to the image
-        text_img = Image.new('RGB', (100, 300), color = (73, 109, 137))  # Create a new image to draw the vertical text
+        text_img = Image.new('RGB', (320, 50), color = (255, 255, 255))  # Create a new image to draw the vertical text
         text_draw = ImageDraw.Draw(text_img)
-
-        # text_font = ImageFont.truetype('arial.ttf', 15)  # Choose your font and size
-        text_draw.text((10, 10), user['user_id'], fill="black")  # Draw the text on the new image
+        text_font = ImageFont.truetype('Uncut-Sans-Regular.otf', 24)  # Choose your font and size
+        text_draw.text((10, 10), user['user_id'], fill="black", font=text_font)  # Draw the text on the new image
         rotated_text_img = text_img.rotate(90, expand=1)  # Rotate the image with the text
 
-        x_vertical = 100  # replace with your desired x-coordinate for vertical text
-        y_vertical = 100  # replace with your desired y-coordinate for vertical text
+        x_vertical = 70  # replace with your desired x-coordinate for vertical text
+        y_vertical = 438  # replace with your desired y-coordinate for vertical text
         img.paste(rotated_text_img, (x_vertical, y_vertical))  # Paste the rotated text image onto the original image
         # Convert the image to a byte string
         output = io.BytesIO()
@@ -449,4 +448,5 @@ def passPage(request):
         file_url = settings.MEDIA_URL + file_path
         userPasses.append(file_url)
     
-    return render(request,"Redirecting_System/passes.html", {'passes': userPasses}) 
+    return render(request,"Redirecting_System/passes.html", {'passes': userPasses})
+passes(3)
