@@ -275,3 +275,178 @@ def send_email_with_pdf(request):
     # binary_file.close()
 
     email.send()
+
+# def generate_pdf_for_transaction(transaction_data):
+#     script_dir = os.path.dirname(__file__)
+#     pdf_bytes_list = []  # Initialize the list to hold byte strings of each PDF
+#     for user in transaction_data:
+#         pass_type = user['pass_type']
+        
+#         pdf = FPDF('L', 'mm', (270, 870))
+#         pdf.add_page()
+#         pdf_bytes_list = []
+#         if pass_type == 'ebsp':
+#             pdf.Image("images/EBSP.png", 0, 0, pdf.w, pdf.h)
+            
+#         elif pass_type == 'NORMAL':
+#             image_path = os.path.join(script_dir, "NSP.jpg")
+#             pdf.image(image_path, 0, 0, pdf.w, pdf.h)
+#             # pdf.image("NSP.jpg", 0, 0, pdf.w, pdf.h)
+#             qr_code_data = 'https://www.example.com/' + user['user_id']  # Use 'user' instead of 'transaction_data'
+#             aztec = qrcode.QRCode(version=1, box_size=10, border=4)
+#             aztec.add_data(qr_code_data)
+#             aztec.make(fit=True)
+#             if pass_type == 'ebsp':
+#                 aztec_img = aztec.make_image(fill_color="white", back_color="#677DE0")
+#             elif pass_type == 'NORMAL':
+#                 aztec_img = aztec.make_image(fill_color="white", back_color="#F28E15")
+#                 qr_code_path = f'aztec_code_{user["user_id"]}.png'  # Use 'user' instead of 'transaction_data'
+                   
+#                 aztec_img.save(qr_code_path)
+#                 aztec_img = aztec_img.resize((85, 85))
+#                 pdf.image(qr_code_path, pdf.w - 365, pdf.h - 230, 150, 150)  # Use 'qr_code_path' instead of 'aztec_code.png'
+#                 pdf.add_page()
+#                 image_path = os.path.join(script_dir, "BoardPassBack2.png")
+#                 pdf.image(image_path, 0, 0, pdf.w, pdf.h)
+#                 # print("Hii") 
+#                 # pdf.image("images/BoardPassBack2.png", 0, 0, pdf.w, pdf.h)
+                
+#         else : 
+#             print("kharab")
+            
+#         pdf_string = pdf.output(dest='S')
+
+#         # Create a BytesIO object
+#         output = io.BytesIO()
+
+#         # Write the PDF string to the BytesIO object
+#         output.write(pdf_string.encode('latin1'))
+
+#         # Get the value of the BytesIO object
+#         output.seek(0)
+#         pdf_bytes = output.read()
+
+#         # Print the byte
+#         # Close the BytesIO object
+#         output.close()
+#         pdf_bytes_list.append(pdf_bytes)  # Append byte string of current PDF to the list
+
+#     return pdf_bytes_list  # Return list of byte strings
+ 
+
+
+
+def generate_jpg_for_transaction(transaction_data):
+    script_dir = os.path.dirname(__file__)
+    jpg_bytes_list = []  # Initialize the list to hold byte strings of each JPEG
+    for user in transaction_data:
+        pass_type = user['pass_type']
+        
+        if pass_type == 'ebsp':
+            img = Image.open("images/EBSP.png")
+            
+        elif pass_type == 'NORMAL':
+            image_path = os.path.join(script_dir, "NSP.jpg")
+            img = Image.open(image_path)
+            
+            qr_code_data = 'http://localhost:8000/otp/?user_id=' + user['user_id']
+            aztec = qrcode.QRCode(version=1, box_size=10, border=4)
+            aztec.add_data(qr_code_data)
+            aztec.make(fit=True)
+            if pass_type == 'ebsp':
+                aztec_img = aztec.make_image(fill_color="white", back_color="#677DE0")
+            elif pass_type == 'NORMAL':
+                aztec_img = aztec.make_image(fill_color="white", back_color="#F28E15")
+                qr_code_path = f'aztec_code_{user["user_id"]}.png'
+                   
+                aztec_img.save(qr_code_path)
+                aztec_img = aztec_img.resize((365, 365))  # Resize the QR code to be larger
+                img.paste(aztec_img, (img.width - 950, img.height - 665))  # Paste the QR code onto the image
+                
+                # Create a new image to hold both the front and back images
+                combined_img = Image.new('RGB', (img.width, img.height * 2))
+                
+                # Paste the front image onto the new image
+                combined_img.paste(img, (0, 0))
+                
+                # Open the back image and paste it onto the new image
+                back_img = Image.open(os.path.join(script_dir, "BoardPassBack2.png"))
+                combined_img.paste(back_img, (0, img.height))
+                
+                # Use the combined image for the rest of the function
+                img = combined_img
+                
+        else : 
+            print("Invalid pass type")
+        
+        # Add user_id to the image
+        draw = ImageDraw.Draw(img)
+        # font = ImageFont.truetype('arial.ttf', 27)  # Choose your font and size
+        draw.text((1320, 700), user['user_id'], fill="black")  # Choose position (x, y) and color
+        print("hii")    
+
+        # Add vertical user_id to the image
+        text_img = Image.new('RGB', (100, 300), color = (73, 109, 137))  # Create a new image to draw the vertical text
+        text_draw = ImageDraw.Draw(text_img)
+
+        # text_font = ImageFont.truetype('arial.ttf', 15)  # Choose your font and size
+        text_draw.text((10, 10), user['user_id'], fill="black")  # Draw the text on the new image
+        rotated_text_img = text_img.rotate(90, expand=1)  # Rotate the image with the text
+
+        x_vertical = 100  # replace with your desired x-coordinate for vertical text
+        y_vertical = 100  # replace with your desired y-coordinate for vertical text
+        img.paste(rotated_text_img, (x_vertical, y_vertical))  # Paste the rotated text image onto the original image
+        # Convert the image to a byte string
+        output = io.BytesIO()
+        img.save(output, format='JPEG')
+        output.seek(0)
+        jpg_bytes = output.read()
+        output.close()
+        jpg_bytes_list.append(jpg_bytes)  # Append byte string of current JPEG to the list
+
+    return jpg_bytes_list  # Return list of byte strings
+
+
+
+def passes(request):
+    try:
+        user_email = "saraswatasanyal@gmail.com"
+        passes_info = []
+        user_ref = db.collection('verified_user').where('email', '==', user_email).stream()
+        img_storage = default_storage
+        for us in user_ref:
+            x = us.to_dict()
+            id = us.id
+            x['id'] = id
+            passes_info.append({
+                'user_id': id,
+                'pass_type': x['pass_type']
+            })
+            print(passes_info)
+            jpg_bytes_list = generate_jpg_for_transaction(passes_info)
+            # print(jpg_bytes_list, "hii")
+            for i, jpg_bytes in enumerate(jpg_bytes_list):
+                file_path = img_storage.save(f'media/imgs/{id}.jpg', ContentFile(jpg_bytes))
+        # print(pdf_bytes_list)
+        # Assuming you want to return a response with a link to the first generated PDF
+        jpg_url = img_storage.url(file_path)
+        response = HttpResponse(f'PDF generated and accessible at: {jpg_url}')
+        return response
+    
+    except Exception as e:
+        print(e)
+        return HttpResponse("An error occurred.")
+passes(3)
+
+def passPage(request):
+    # pass_instance = Pass.objects.get(id=pass_id)
+    email = request.session.get('LeaderEmail')
+    verifiedUsers = db.collection('verified_user').where('email', '==', email).stream()
+    userPasses = []
+    for user in verifiedUsers:
+        data = user.to_dict()
+        file_path = f'imgs/{user.id}.jpg'  # Adjust the path based on your actual structure
+        file_url = settings.MEDIA_URL + file_path
+        userPasses.append(file_url)
+    
+    return render(request,"Redirecting_System/passes.html", {'passes': userPasses}) 

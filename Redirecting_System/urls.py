@@ -8,9 +8,6 @@ urlpatterns = [
     path('submit/', views.verify_otp, name='verify_otp'),
     path('api/', views.user_data, name='user_data'),
     path('api-verifyid/', views.verifyid, name='verifyid'),
-<<<<<<< Updated upstream
     path('send_email/',views.send_email_with_pdf,name="send_email"),
-=======
     path('passes/',views.passPage,name="passes"),
->>>>>>> Stashed changes
 ]
