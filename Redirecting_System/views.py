@@ -11,7 +11,7 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
 from .encrypt_decrypt import encrypt
-
+print(settings.BASE_DIR)
 def get_firebase_app(name):
     try:
         return firebase_admin.get_app(name)
@@ -143,3 +143,23 @@ def verifyid(request):
     except Exception as e:
         print(e)
         return Response({'error': 'An error occurred'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+def send_email_with_pdf(request):
+    email = EmailMessage(
+        'Hello',
+        'Body goes here',
+        'saraswatasanyal@gmail.com',
+        ['shivamgupta@iitg.ac.in'],
+        headers = {'Reply-To': 's.sanyal@iitg.ac.in'}
+    )
+
+    # Open the file in bynary mode
+    binary_file = open('ss.pdf', 'rb')
+
+    # Attach the file with the name and the MIME type
+    email.attach('ss.pdf', binary_file.read(), 'application/pdf')
+
+    # Don't forget to close the file after you have finished processing it
+    binary_file.close()
+
+    email.send()
