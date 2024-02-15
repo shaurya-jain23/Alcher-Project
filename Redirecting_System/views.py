@@ -379,7 +379,7 @@ def generate_jpg_for_transaction(transaction_data):
                 combined_img.paste(img, (0, 0))
                 
                 # Open the back image and paste it onto the new image
-                back_img = Image.open(os.path.join(script_dir, "BoardPassBack2.png"))
+                back_img = Image.open(os.path.join(script_dir, "BoardPassBack2.jpg"))
                 combined_img.paste(back_img, (0, img.height))
                 
                 # Use the combined image for the rest of the function
@@ -392,8 +392,6 @@ def generate_jpg_for_transaction(transaction_data):
         draw = ImageDraw.Draw(img)
         font = ImageFont.truetype(local_filename, 27)  # Choose your font and size
         draw.text((1320, 700), user['user_id'], fill="black",font=font)  # Choose position (x, y) and color
-        print("hii")    
-
         # Add vertical user_id to the image
         text_img = Image.new('RGB', (320, 50), color = (255, 255, 255))  # Create a new image to draw the vertical text
         text_draw = ImageDraw.Draw(text_img)
@@ -432,7 +430,6 @@ def passes(request):
                 'user_id': id,
                 'pass_type': x['pass_type']
             })
-        print(passes_info)
         jpg_bytes_list = generate_jpg_for_transaction(passes_info)
         print(len(jpg_bytes_list))
         for i, jpg_bytes in enumerate(jpg_bytes_list):
