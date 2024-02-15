@@ -1,4 +1,9 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect
+from django.http import JsonResponse
+from django.http import HttpResponse
+from django.core.mail import EmailMessage
+from django.core.mail import send_mail
+from django.views.decorators.csrf import csrf_exempt
 import firebase_admin
 from firebase_admin import credentials, firestore
 import pandas as pd
@@ -6,11 +11,22 @@ from django.core.mail import EmailMessage
 from django.core.mail import send_mail
 from django.conf import settings
 import requests
+import string
+import random
+import json
+from fpdf import FPDF
+import os
+import io
+import qrcode
 from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
 from .encrypt_decrypt import encrypt
+from django.core.files.storage import default_storage
+from django.core.files.base import ContentFile
+from django.core.files.storage import FileSystemStorage
+from PIL import Image, ImageDraw, ImageFont
 import os
 def get_firebase_app(name):
     try:
@@ -20,6 +36,95 @@ def get_firebase_app(name):
         return firebase_admin.initialize_app(cred, name=name)
 
 db = firestore.client(app=get_firebase_app('alcher-redirecting-system'))
+
+
+
+
+def get_data(request):
+    data1 = {
+        'DAY 1': db.collection('Data').document('Day-1').get().to_dict(),
+        'DAY 2': db.collection('Data').document('Day-2').get().to_dict(),
+        'DAY 3': db.collection('Data').document('Day-3').get().to_dict(),
+    }
+    data2 = {
+        'EARLY BIRD SEASON PASS': db.collection('Data').document('EARLY BIRD SEASON PASS').get().to_dict(),
+        'NORMAL SEASON PASS': db.collection('Data').document('NORMAL SEASON PASS').get().to_dict(),
+    }
+    request.session['dayWisePasses'] = data1
+    request.session['seasonPasses'] = data2
+    return JsonResponse(data2)
+
+def home(request):
+    dayWisePasses = request.session.get('dayWisePasses', {})
+    print(dayWisePasses)
+    seasonPasses = request.session.get('seasonPasses', {})
+    return render(request, "Redirecting_System/home.html",{'dayWisePasses': dayWisePasses,'seasonPasses':seasonPasses})
+    
+
+def otp(request):
+    return render(request, "Redirecting_System/otp.html")
+
+def Success(request):
+    return render(request, "Redirecting_System/success.html")
+
+@csrf_exempt
+def sendOtp(request):
+    try:
+        email = json.loads(request.body)['email']
+        request.session['LeaderEmail'] = email
+        otp = random.randint(100000, 999999)
+        print("OTP : ", otp)
+        subject = 'Your email verification'
+        message = 'Your otp for verifiction of your email is ' + str(otp)
+        from_email = settings.EMAIL_HOST_USER
+        send_mail(subject, message, from_email, [email])
+        doc_ref = db.collection('all_otps').document()
+
+        doc_ref.set({
+            'id': doc_ref.id,
+            'email': email,
+            'otp': otp,
+        })
+        request.session['OTPId'] = doc_ref.id
+        
+    except Exception as e:
+        print(e)
+    return JsonResponse({"otp": otp})
+
+
+def verify_otp(request):
+    # Get the list of OTP values from the POST data
+    otp_values = request.POST.getlist('otp')
+    # Combine the OTP values into a single string
+    otp = ''.join(otp_values)
+
+    otpID = request.session.get('OTPId')
+    snapshots = db.collection('all_otps').where('id', '==', otpID).stream() #
+    users = []
+    otp1 = 0
+    for user in snapshots:
+        formattedData = user.to_dict()
+        print(formattedData)
+        otp1 = formattedData['otp']
+        users.append(user.reference)
+
+    OTP = int(otp)
+    email = request.session.get('LeaderEmail')
+    print(OTP, otp1)
+    if OTP == otp1:
+        verifiedUsers = db.collection('verified_user').where('email', '==', email).stream()
+        userPasses = []
+        for user in verifiedUsers:
+            data = user.to_dict()
+            userPasses.append(user.id)
+
+        return redirect('passes')
+    
+    context = {
+        'message': "Incorrect OTP",
+        'email': email
+    }
+    return render(request, 'Redirecting_System/otp.html', context)
 
 def download_file(url):
     base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)+"../Redirecting_System"))

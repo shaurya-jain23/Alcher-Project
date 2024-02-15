@@ -1,0 +1,56 @@
+{% extends "Redirecting_System/base.html" %}
+{% load static %}
+
+{% block title %}
+<title>Passes</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha256-w22dPn66I5zpF9+jp4jxhnRqKzn3+CezC3RyKi9v0AA=" crossorigin="anonymous" />
+<link rel="stylesheet" href="{% static 'css/passes.css' %}">
+{% endblock title %}
+
+{% block page %}
+<div style="background-color:#1E1E1E;">
+    <div id="passPortalContent">
+        <div class="headtxt">
+            <img src="{% static 'images/Vector2.png' %}">
+            <h2 class="head">YOU HAVE SUCCESSFULLY BOOKED YOUR ALCHER PASSES</h2>
+        </div>
+        <p class="belowtxt">Your summary here for the Alcheringa 2024 passes</p>
+    </div>
+
+    <div class="pass">
+        <div class="passtxt">
+            <h2 class="passhead">ATTENDEES</h2>
+            <p class="belowtxt">Pass-holders and their type of passes</p>
+        </div>
+
+        {% for pass in passes %}
+            <div class="pass-info">
+                <img src="{{pass}}" alt="QR Code Image">
+                <button class="download">
+                    <a style="text-decoration: none; color:#1E1E1E;" href="{{ MEDIA_URL }}{{ pass }}" download="{{ pass }}">
+                        <h2>DOWNLOAD <img src="{% static 'images/download.png' %}" style="height:1.5vw;width:1.5vw;"></h2>
+                    </a>
+                </button>
+            </div>
+        {% endfor %}
+
+    </div>
+
+    <div class="reg">
+        <button class="btn">
+            <a href="#" style="text-decoration: none; color:black;">BUY MORE PASSES HERE &rarr;</a>
+        </button>
+    </div>
+</div>
+
+{% endblock page %}
+
+{% block script %}
+<script>
+        window.addEventListener('DOMContentLoaded', ()=>{
+            let loader = document.querySelector('#preLoader');
+              loader.style.display = 'none';
+    })
+</script>
+
+{% endblock script %}

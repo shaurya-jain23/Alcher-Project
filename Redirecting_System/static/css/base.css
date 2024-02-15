@@ -26,8 +26,8 @@
     padding: 0;
 }
 body{
-    background: url('../images/texture.png');
-    background-blend-mode: color-burn ;
+    /* background: url('../images/texture.png'); */
+    /* background-blend-mode: color-burn ; */
     z-index: 200;
     box-sizing: border-box;
 }
@@ -104,7 +104,7 @@ h1 {
 }
 .navbar {
 
-    background-color: #E1E1E11A;
+    background-color: #1E1E1EB2;
     color: #f4f4f4;
     display: flex;
     padding: 0.5rem 2rem;
@@ -204,7 +204,6 @@ h1 {
 }
 
 .footer {
-    margin-top: 3vw;
     font-family: 'Uncut-Sans';
     background-image: url(../images/ribbon-b.svg), url(../images/ribbon.svg) !important;
     height: 50vw;

@@ -1,0 +1,84 @@
+@font-face {
+    font-family: 'fsp-demo-freigeist-con-black-5';
+    src: url(../Fontspring-DEMO-freigeist-conblack.otf);
+  }
+@font-face {
+    font-family: 'Uncut-Sans';
+    src: url(../Uncut-Sans-Regular.otf);
+  }
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+#passPortalContent{
+    padding: 3vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.headtxt{
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    align-items: center;
+}
+.head{
+    font-size:2.5vw;
+    color:#39A279;
+    font-family: 'fsp-demo-freigeist-con-black-5';
+}
+.belowtxt{
+    color:white;
+    font-family: 'Uncut-Sans';
+    font-size:1.4vw;
+}
+.pass{
+    padding-left:5vw;
+    padding-right:5vw;
+}
+.passtxt{
+    display: flex;
+    flex-direction: column;
+}
+.passhead{
+    color:white;
+    font-family: 'fsp-demo-freigeist-con-black-5';
+    font-size: 3vw;   
+}
+.download{
+    height: 4vw;
+    background: #39A279;
+    color:#1E1E1E;
+    padding-top: 0.2vw;
+    padding-left:0.5vw;
+    padding-right:0.5vw;
+    padding-bottom: 0.2vw;
+    font-size: 1.3vw;;
+    font-family: 'fsp-demo-freigeist-con-black-5';
+}
+.reg{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.btn{
+    padding:1vw;
+    border-radius: 1vw;
+    background: #F6D317;
+    color:black;
+    font-family: 'fsp-demo-freigeist-con-black-5';
+    font-size: 2vw;
+}
+
+.pass-info{
+    margin-top: 40px;
+    padding: 0 4vw;
+    display: flex;
+    justify-content: space-between;
+}
+
+.pass-info img{
+    width: 60vw;
+}
