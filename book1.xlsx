@@ -1,0 +1,39 @@
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>FIRST_NAME</th>
+      <th>LAST_NAME</th>
+      <th>GENDER</th>
+      <th>PHONE_NUMBER</th>
+      <th>EMAIL</th>
+      <th>BOOKING_ID</th>
+      <th>PAYMENT_STATUS</th>
+      <th>AMOUNT_PAID</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Akshat</td>
+      <td>Akshat</td>
+      <td>MALE</td>
+      <td>8875833508</td>
+      <td>akshat.akshat@iitg.ac.in</td>
+      <td>BVALC12545641</td>
+      <td>COMPLETED</td>
+      <td>300</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Govind Madhav</td>
+      <td>Vyas</td>
+      <td>MALE</td>
+      <td>9406871655</td>
+      <td>govindmadhavvyas@gmail.com</td>
+      <td>BVALC12335642</td>
+      <td>COMPLETED</td>
+      <td>300</td>
+    </tr>
+  </tbody>
+</table>

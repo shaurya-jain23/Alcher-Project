@@ -11,7 +11,7 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
 from .encrypt_decrypt import encrypt
-print(settings.BASE_DIR)
+import os
 def get_firebase_app(name):
     try:
         return firebase_admin.get_app(name)
@@ -22,16 +22,18 @@ def get_firebase_app(name):
 db = firestore.client(app=get_firebase_app('alcher-redirecting-system'))
 
 def download_file(url):
-    local_filename = 'book1.xlsx'
+    base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)+"../Redirecting_System"))
+    local_filename = os.path.join(base_dir, 'book1.xls')
     r = requests.get(url)
     f = open(local_filename, 'wb')
     f.write(r.content)
     f.close()
-    return
+    return base_dir
 
 def automation(request):
+    dir = download_file('https://dev.bharatversity.com/events/website/api/event-amount-overview-excel-sheet-api/550b0b35-5bd1-47c0-88b2-8a952dd08e08')
     index=db.collection('index').document('rcT6Wb8kyh07erua4VaM').get().to_dict()['index']
-    data=pd.read_excel(r'/Users/shivamg/Downloads/Book1.xlsx')
+    data=pd.read_excel(dir+'/book1.xls')
     pendinguser=db.collection('pending_user').stream()
     pend=[]
     for puser in pendinguser:
@@ -93,22 +95,25 @@ def automation(request):
 @api_view(['GET'])
 def user_data(request):
     try:
-        email = request.query_params.get('Email', None)
+        email = request.query_params.get('email', None)
         if not email:
             return Response({'error': 'Email is required'}, status=status.HTTP_400_BAD_REQUEST)
         users=[]
-        user_ref = db.collection('transaction').where('Email','==',email).stream()
+        user_ref = db.collection('verified_user').where('email','==',email).stream()
         print(email)
+        exist = False
         for user in user_ref:
             user_dic = user.to_dict()
-            print(user_dic['Email'])
+            if user_dic['email'] == email:
+                exist = True
+            print(user_dic['email'])
             users.append(user_dic)
         if not users:
             return Response({'error': 'User not found'}, status=status.HTTP_404_NOT_FOUND)
-        user = users[0]
-        has_passes=user['err_des']['pass']
-        print(has_passes+100)
-        if has_passes:
+        user = users
+        # has_passes=user['err_des']['pass']
+        # print(has_passes+100)
+        if exist:
             encrypted_data = encrypt("alcheringa24",user)
         return Response(encrypted_data)
         # else:
@@ -143,23 +148,25 @@ def verifyid(request):
     except Exception as e:
         print(e)
         return Response({'error': 'An error occurred'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-
 def send_email_with_pdf(request):
+    from_email = settings.EMAIL_HOST_USER
     email = EmailMessage(
         'Hello',
         'Body goes here',
-        'saraswatasanyal@gmail.com',
+        from_email,
         ['shivamgupta@iitg.ac.in'],
         headers = {'Reply-To': 's.sanyal@iitg.ac.in'}
     )
-
+    with open('IMG20240211171953.jpg', 'rb') as img_file:
+    # Attach the image file with the name and the MIME type
+        email.attach('IMG20240211171953.jpg', img_file.read(), 'image/jpeg')
     # Open the file in bynary mode
-    binary_file = open('ss.pdf', 'rb')
+    # binary_file = open('ss.pdf', 'rb')
 
     # Attach the file with the name and the MIME type
-    email.attach('ss.pdf', binary_file.read(), 'application/pdf')
+    # email.attach('ss.pdf', binary_file.read(), 'application/pdf')
 
     # Don't forget to close the file after you have finished processing it
-    binary_file.close()
+    # binary_file.close()
 
     email.send()
