@@ -51,10 +51,9 @@
     height: 4vw;
     background: #39A279;
     color:#1E1E1E;
-    padding-top: 0.2vw;
-    padding-left:0.5vw;
-    padding-right:0.5vw;
-    padding-bottom: 0.2vw;
+    border: none;
+    padding: 0 2vw;
+    border-radius: 5px;
     font-size: 1.3vw;;
     font-family: 'fsp-demo-freigeist-con-black-5';
 }
@@ -64,6 +63,7 @@
     align-items: center;
 }
 .btn{
+    margin-top: 50px;
     padding:1vw;
     border-radius: 1vw;
     background: #F6D317;
@@ -79,6 +79,11 @@
     justify-content: space-between;
 }
 
-.pass-info img{
+.pass-info img[alt = 'QR Code Image']{
+    height: 21vw; 
+    object-fit: cover;
+    object-position: 0% 0%; 
     width: 60vw;
+    border: 2px solid white;
+    border-radius: 5px;
 }

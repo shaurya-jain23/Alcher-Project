@@ -134,18 +134,25 @@ def download_file(url):
     f.write(r.content)
     f.close()
     return base_dir
-
+def unique_id(length):
+    iv = (db.collection('verified_user').stream())
+    document_ids = [doc.id for doc in iv]
+    while True:
+        random_string = ''.join(random.choices(string.ascii_letters + string.digits, k=length))
+        if random_string not in document_ids:
+            print(random_string)
+            return random_string
 def automation(request):
     dir = download_file('https://dev.bharatversity.com/events/website/api/event-amount-overview-excel-sheet-api/550b0b35-5bd1-47c0-88b2-8a952dd08e08')
     index=db.collection('index').document('rcT6Wb8kyh07erua4VaM').get().to_dict()['index']
-    data=pd.read_excel(dir+'/book1.xls')
+    data=pd.read_excel('Book1.xlsx')
     pendinguser=db.collection('pending_user').stream()
     pend=[]
     for puser in pendinguser:
         user=puser.to_dict()
         ind = user['index']
         if data['PAYMENT_STATUS'][ind]== 'SUCCESS':
-            verified = db.collection('verified_user').document()
+            verified = db.collection('verified_user').document(unique_id(7))
             email=data['EMAIL'][ind]
             verify={
                 "name": data['FIRST_NAME'][ind] + " " + data['LAST_NAME'][ind],
@@ -165,7 +172,7 @@ def automation(request):
         
     for i in range(index,len(data)):
         if data['PAYMENT_STATUS'][i]== 'SUCCESS':
-            verified = db.collection('verified_user').document()
+            verified = db.collection('verified_user').document(unique_id(7))
             email=data['EMAIL'][i]
             verify={
                 "name": data['FIRST_NAME'][i] + " " + data['LAST_NAME'][i],
@@ -196,7 +203,6 @@ def automation(request):
             }
             pendings.set(pending)
     db.collection('index').document('rcT6Wb8kyh07erua4VaM').update({'index':index})
-
 @api_view(['GET'])
 def user_data(request):
     try:
@@ -339,6 +345,9 @@ def send_email_with_pdf(request):
 def generate_jpg_for_transaction(transaction_data):
     script_dir = os.path.dirname(__file__)
     jpg_bytes_list = []  # Initialize the list to hold byte strings of each JPEG
+    base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    local_filename = os.path.join(base_dir, 'Redirecting_System')
+    local_filename = os.path.join(local_filename, 'Uncut-Sans-Regular.otf')
     for user in transaction_data:
         pass_type = user['pass_type']
         
@@ -381,14 +390,14 @@ def generate_jpg_for_transaction(transaction_data):
         
         # Add user_id to the image
         draw = ImageDraw.Draw(img)
-        font = ImageFont.truetype('Uncut-Sans-Regular.otf', 27)  # Choose your font and size
+        font = ImageFont.truetype(local_filename, 27)  # Choose your font and size
         draw.text((1320, 700), user['user_id'], fill="black",font=font)  # Choose position (x, y) and color
         print("hii")    
 
         # Add vertical user_id to the image
         text_img = Image.new('RGB', (320, 50), color = (255, 255, 255))  # Create a new image to draw the vertical text
         text_draw = ImageDraw.Draw(text_img)
-        text_font = ImageFont.truetype('Uncut-Sans-Regular.otf', 24)  # Choose your font and size
+        text_font = ImageFont.truetype(local_filename, 24)  # Choose your font and size
         text_draw.text((10, 10), user['user_id'], fill="black", font=text_font)  # Draw the text on the new image
         rotated_text_img = text_img.rotate(90, expand=1)  # Rotate the image with the text
 
@@ -403,7 +412,7 @@ def generate_jpg_for_transaction(transaction_data):
         output.close()
         jpg_bytes_list.append(jpg_bytes)  # Append byte string of current JPEG to the list
 
-    return jpg_bytes_list  # Return list of byte strings
+    return jpg_bytes_list 
 
 
 
@@ -411,21 +420,23 @@ def passes(request):
     try:
         user_email = "saraswatasanyal@gmail.com"
         passes_info = []
+        iid=[]
         user_ref = db.collection('verified_user').where('email', '==', user_email).stream()
         img_storage = default_storage
         for us in user_ref:
             x = us.to_dict()
             id = us.id
             x['id'] = id
+            iid.append(id)
             passes_info.append({
                 'user_id': id,
                 'pass_type': x['pass_type']
             })
-            print(passes_info)
-            jpg_bytes_list = generate_jpg_for_transaction(passes_info)
-            # print(jpg_bytes_list, "hii")
-            for i, jpg_bytes in enumerate(jpg_bytes_list):
-                file_path = img_storage.save(f'media/imgs/{id}.jpg', ContentFile(jpg_bytes))
+        print(passes_info)
+        jpg_bytes_list = generate_jpg_for_transaction(passes_info)
+        print(len(jpg_bytes_list))
+        for i, jpg_bytes in enumerate(jpg_bytes_list):
+            file_path = img_storage.save(f'media/imgs/{iid[i]}.jpg', ContentFile(jpg_bytes))
         # print(pdf_bytes_list)
         # Assuming you want to return a response with a link to the first generated PDF
         jpg_url = img_storage.url(file_path)
