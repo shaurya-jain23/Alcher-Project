@@ -357,7 +357,6 @@ def generate_jpg_for_transaction(transaction_data):
         elif pass_type == 'NORMAL':
             image_path = os.path.join(script_dir, "NSP.jpg")
             img = Image.open(image_path)
-            
             qr_code_data = 'http://localhost:8000/otp/?user_id=' + user['user_id']
             aztec = qrcode.QRCode(version=1, box_size=10, border=4)
             aztec.add_data(qr_code_data)
@@ -426,28 +425,47 @@ def passes(request):
             id = us.id
             x['id'] = id
             iid.append(id)
-            passes_info.append({
-                'user_id': id,
-                'pass_type': x['pass_type']
-            })
-        jpg_bytes_list = generate_jpg_for_transaction(passes_info)
-        print(len(jpg_bytes_list))
-        for i, jpg_bytes in enumerate(jpg_bytes_list):
-            file_path = img_storage.save(f'media/imgs/{iid[i]}.jpg', ContentFile(jpg_bytes))
+            y = db.collection('verified_user').document(id).get().to_dict()
+            if 'isPassGenerated' in y:
+                passes_info.append({
+                    'user_id': id,
+                    'pass_type': x['pass_type']
+                })
+            db.collection('verified_user').document(id).update({"isPassGenerated": True})
+        if len(passes_info) :
+            jpg_bytes_list = generate_jpg_for_transaction(passes_info)
+            for i, jpg_bytes in enumerate(jpg_bytes_list):
+                file_path = img_storage.save(f'media/imgs/{iid[i]}.jpg', ContentFile(jpg_bytes))
         # print(pdf_bytes_list)
         # Assuming you want to return a response with a link to the first generated PDF
-        jpg_url = img_storage.url(file_path)
-        response = HttpResponse(f'PDF generated and accessible at: {jpg_url}')
-        return response
+            jpg_url = img_storage.url(file_path)
+            response = HttpResponse(f'PDF generated and accessible at: {jpg_url}')
+            return response
     
     except Exception as e:
         print(e)
         return HttpResponse("An error occurred.")
 passes(3)
 
+from urllib.parse import urlparse, parse_qs
+
+url = "http://localhost:8000/otp/?user_id=jasdlkfjasdkjffd"
+
+# Parse the URL
+parsed_url = urlparse(url)
+
+# Extract the user_id parameter value
+user_id = parse_qs(parsed_url.query).get('user_id', [None])[0]
 def passPage(request):
     # pass_instance = Pass.objects.get(id=pass_id)
+    parsed_url = urlparse(url)
+    user_id = parse_qs(parsed_url.query).get('user_id', [None])[0]
     email = request.session.get('LeaderEmail')
+    
+    user = db.collection('verified_user').document(user_id)
+    if user.exist:
+        if email==user['email']:
+            
     verifiedUsers = db.collection('verified_user').where('email', '==', email).stream()
     userPasses = []
     for user in verifiedUsers:
@@ -455,6 +473,4 @@ def passPage(request):
         file_path = f'imgs/{user.id}.jpg'  # Adjust the path based on your actual structure
         file_url = settings.MEDIA_URL + file_path
         userPasses.append(file_url)
-    
     return render(request,"Redirecting_System/passes.html", {'passes': userPasses})
-passes(3)
